@@ -38,7 +38,7 @@
 
 
 ##クオリティーコントロール
-`mkdir 1_qc
+`mkdir 1_qc`
 
 `prinseq-lite.pl -fastq data/10K_SRR2048224_1.fastq -fastq2 data/10K_SRR2048224_2.fastq -out_good 1_qc/10K_SRR2048224.notail -out_bad null -out_format 3 -trim_left 5 -trim_tail_right 5 -trim_qual_right 30 -ns_max_p 20 -min_len 30`
 
