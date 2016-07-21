@@ -1,10 +1,11 @@
-ls /home/iu/chipseq/data
+## 公開データの取得
+
+### データの確認
+
+```
 cd /home/iu/chipseq/data
-gunzip input_1.fastq.gz
-gunzip input_2.fastq.gz
-gunzip sample_1.fastq.gz
-gunzip sample_2.fastq.gz
-ls
+ls data
+```
 
 fastqc --nogroup -t 8 -o ./ input_1.fastq input_2.fastq sample_1.fastq sample_2.fastq
 ls
@@ -31,7 +32,10 @@ macs2 callpeak -t sample.sorted.bam -c input.sorted.bam -f BAMPE -n handson2016 
 
 java -jar /usr/local/bin/snpEff.jar eff -csvStats stats.txt -c /usr/local/bin/snpEff.config -i bed -o bedAnn R64-1-1.82 handson2016_summits.bed > handson2016_summits.annotated.bed
 
+## モチーフ探索
 
+### rGADEM
+```r
 R
 library(rGADEM)
 library("BSgenome.Scerevisiae.UCSC.sacCer3")
@@ -48,6 +52,7 @@ plot(gadem)
 dev.off()
 
 q()
+```
 
 
 evince motif.pdf
