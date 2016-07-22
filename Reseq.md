@@ -12,7 +12,7 @@ less /home/iu/genome/sacCer3/genome.fa
 ```
 less data/ERR038793_1.fastq
 ```
-##34
+##p34
 ```
 wc -l data/ERR038793_1.fastq
 
