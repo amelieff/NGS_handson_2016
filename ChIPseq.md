@@ -159,6 +159,13 @@ samtools index input.sorted.bam
 samtools index sample.sorted.bam
 ```
 
+### スコアの高いピークを確認
+
+```
+cd peak_detection
+cat handson2016_summits.bed | sort -k 5n
+```
+
 ## アノテーション
 
 ```
@@ -207,7 +214,7 @@ R
 library(rGADEM)
 library("BSgenome.Scerevisiae.UCSC.sacCer3")
 
-BED <- read.table("handson2016_peaks.narrowPeak", header=FALSE, sep="\t")
+BED <- read.table("../macs2_res/handson2016_peaks.narrowPeak", header=FALSE, sep="\t")
 BED <- data.frame(chr=as.factor(BED[,1]),start=as.numeric(BED[,2]),end=as.numeric(BED[,3]))
 
 rgBED<-IRanges(start=BED[,2],end=BED[,3])
