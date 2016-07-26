@@ -29,7 +29,7 @@ fastqc -h
 mkdir fastqc_before
 
 fastqc -o fastqc_before -f fastq \
--c data/ERR038793_1.fastq data/ERR038793_2.fastq
+data/ERR038793_1.fastq data/ERR038793_2.fastq
 
 ls fastqc_before
 
@@ -55,7 +55,7 @@ SLIDINGWINDOW:5:20 LEADING:20 TRAILING:20  MINLEN:80
 ```
 mkdir fastqc_after
 
-fastqc -o fastqc_after -f fastq -c \
+fastqc -o fastqc_after -f fastq \
 trimmed_data/paired_output_ERR038793_1.fastq \
 trimmed_data/paired_output_ERR038793_2.fastq
 
