@@ -185,3 +185,36 @@ cuffmerge -o COMPARE -g /home/iu/genome/sacCer3/genes.gtf -s /home/iu/genome/sac
 ```
 cuffdiff -o COMPARE -L Group1,Group2 COMPARE/merged.gtf 2_mapping/10K_SRR2048224.sorted.bam,2_mapping/10K_SRR2048225.sorted.bam 2_mapping/10K_SRR2048228.sorted.bam,2_mapping/10K_SRR2048229.sorted.bam
 ```
+
+##可視化
+cummeRbundのインストール  
+Rを起動
+
+```
+source("https://bioconductor.org/biocLite.R")
+biocLite("cummeRbund")
+library(cummeRbund)
+```
+
+サマリーの表示
+
+```
+cuff <- readCufflinks()
+cuff
+```
+
+Scatter plot
+
+```
+s <- csScatter(genes(cuff), "Group1", "Group2", smooth=T)
+s
+```
+
+Density plot
+
+```
+dens <- csDensity(genes(cuff))
+dens
+densRep <- csDensity(genes(cuff),replicates=T)
+densRep
+```
