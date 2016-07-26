@@ -1,5 +1,6 @@
-#RNA-seq
-##公開データの取得
+# RNA-seq
+
+## 公開データの取得
 ```
 ls -l /home/iu/genome/sacCer3/
 
@@ -45,7 +46,7 @@ firefox fastqc_res/10K_SRR2048228_1_fastqc/fastqc_report.html fastqc_res/10K_SRR
 firefox fastqc_res/10K_SRR2048229_1_fastqc/fastqc_report.html fastqc_res/10K_SRR2048229_2_fastqc/fastqc_report.html
 ```
 ---
-##クオリティーコントロール
+## クオリティーコントロール
 ```
 prinseq-lite.pl -h
 ```
@@ -82,7 +83,7 @@ firefox fastqc_res/10K_SRR2048228.notail_1_fastqc/fastqc_report.html fastqc_res/
 firefox fastqc_res/10K_SRR2048229.notail_1_fastqc/fastqc_report.html fastqc_res/10K_SRR2048229.notail_2_fastqc/fastqc_report.html
 ```
 ---
-##マッピング
+## マッピング
 ```
 mkdir 2_mapping
 
@@ -136,7 +137,7 @@ IGV上でのクリップボードからのペーストは<kbd>ctrl</kbd> + <kbd>
 `chrX:139,767-139,933`
 
 ---
-##発現定量
+## 発現定量
 ```
 cufflinks -o SRR2048224 --min-frags-per-transfrag 2 2_mapping/10K_SRR2048224.sorted.bam
 
@@ -186,7 +187,7 @@ q: 終了
 Vimについてもっと知りたい方は `vimtutor` を実行してみてください  
 充実したチュートリアルを受けることができます
 ---
-##発現比較
+## 発現比較
 
 ```
 cuffmerge -o COMPARE -g /home/iu/genome/sacCer3/genes.gtf -s /home/iu/genome/sacCer3/genome.fa  transcripts.gtf.txt
@@ -196,7 +197,7 @@ cuffmerge -o COMPARE -g /home/iu/genome/sacCer3/genes.gtf -s /home/iu/genome/sac
 cuffdiff -o COMPARE -L Group1,Group2 COMPARE/merged.gtf 2_mapping/10K_SRR2048224.sorted.bam,2_mapping/10K_SRR2048225.sorted.bam 2_mapping/10K_SRR2048228.sorted.bam,2_mapping/10K_SRR2048229.sorted.bam
 ```
 ---
-##可視化
+## 可視化
 cummeRbundのインストール  
 Rを起動
 
