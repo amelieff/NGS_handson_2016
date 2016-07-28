@@ -166,6 +166,11 @@ cd peak_detection
 cat handson2016_summits.bed | sort -k 5n
 ```
 
+### リードがペアで見えない場合は
+IGVでリードのペアを繋いで表示するには、 `view as pair` を有効にします
+
+![view as pair](img/img01.png)
+
 ## アノテーション
 
 ```
