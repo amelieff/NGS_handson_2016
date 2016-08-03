@@ -238,3 +238,149 @@ q()
 ```
 evince motif.pdf
 ```
+
+
+## EXTRA STAGE
+
+### ChIPpeakAnnoを用いてピークのアノテーションを行う
+
+このセクションは2016年7月28日の講義中に受講生の熱い要望を受け追加しました。  
+講義中で使用した `snpEff` 以外のアノテーション方法を示したものです。
+
+また、この内容は講義資料のPDFには含まれておりませんのでご注意ください。
+
+### 要約
+下記のコマンドを `/home/iu/chipseq/` で実行します。
+
+```
+mkdir chippeakanno
+cd chippeakanno
+R
+```
+
+Rを起動して下記のコマンドを実行します。  
+`/home/iu/chipseq/chippeakanno` に下記のファイルが出力されます。
+
+- `annotated.bed`
+    - アノテーション済みのBEDファイル
+- `annotation_summary.txt`
+    - アノテーションされた領域の集計情報
+- `annotation.pdf`
+    - アノテーションされた領域を図示したもの
+
+```R
+library(ChIPpeakAnno)
+
+ensembl = useMart(biomart="ENSEMBL_MART_ENSEMBL", host="www.ensembl.org")
+sacCer3 <- useDataset("scerevisiae_gene_ensembl", mart=ensembl)
+ann.data <- getAnnotation(mart=sacCer3, featureType="TSS")
+
+bed.df <- read.table("../macs2_res/handson2016_peaks.narrowPeak", header=FALSE, sep="\t")
+bed.gr <- BED2RangedData(bed.df[1:4], header = FALSE)
+
+bed.anno <- annotatePeakInBatch(RangedData(bed.gr), AnnotationData = ann.data, output = "both")
+bed.anno.table <- table(as.data.frame(bed.anno)$insideFeature)
+
+write.table(bed.anno.table, "annotation_summary.txt", quote=FALSE, sep="\t")
+write.table(as.data.frame(bed.anno), "annotated.bed", quote=FALSE, sep="\t", row.names=FALSE)
+
+library(ggplot2)
+
+fortify.table <- function(model, ...) {
+  data <- reshape2::melt(model)
+  return(data)
+}
+
+reshape.bed <- reshape2::melt(bed.anno.table)
+reshape.bed
+pdf("annotation.pdf")
+g <- ggplot(data=reshape.bed, aes(x=Var1, y=value, fill=Var1))
+g <- g + guides(fill=FALSE)
+g <- g + geom_bar(width=0.8, stat='identity')
+g <- g + xlab('Region')
+g <- g + ylab('Peak count')
+g <- g + ggtitle('Peak Binding Regions')
+g <- g + theme(axis.text.x = element_text(angle=60, hjust=1))
+plot(g)
+dev.off()
+```
+
+出力されるグラフの例
+
+![img02](img/img02.png)
+
+### 解説
+おおまかな流れとともにコマンドを紹介します。
+
+ライブラリを読み込みます。  
+今回はデータの取得に `biomaRt` を使用していますが、 `ChIPpeakAnno` の読み込み時に同時にロードされるので個別の読み込みは不要です。
+
+```R
+library(ChIPpeakAnno)
+```
+
+アノテーションデータを取得します。  
+`ChIPpeakAnno` には幾つかの生物種についてデータが同梱されていますが、sacCer3のデータは存在しないため、別途取得する必要があります。  
+ここでは、 `biomaRt` を使用して、ensemblよりTSSのデータを取得します。
+
+```R
+ensembl = useMart(biomart="ENSEMBL_MART_ENSEMBL", host="www.ensembl.org")
+sacCer3 <- useDataset("scerevisiae_gene_ensembl", mart=ensembl)
+ann.data <- getAnnotation(mart=sacCer3, featureType="TSS")
+```
+
+ピークデータを読み込みます。
+
+```R
+bed.df <- read.table("../macs2_res/handson2016_peaks.narrowPeak", header=FALSE, sep="\t")
+```
+
+領域の情報を計算します。  
+不要なピークのスコアなどは使用しないように `bed.df[1:4]` と指定します。
+
+```R
+bed.gr <- BED2RangedData(bed.df[1:4], header = FALSE)
+```
+
+アノテーションを実施します。
+
+```R
+bed.anno <- annotatePeakInBatch(RangedData(bed.gr), AnnotationData = ann.data, output = "both")
+```
+
+ゲノム上の領域情報のみをサマリーとして取得します。
+
+```R
+bed.anno.table <- table(as.data.frame(bed.anno)$insideFeature)
+```
+
+それぞれのデータをファイルに書き出します。
+
+```R
+write.table(bed.anno.table, "annotation_summary.txt", quote=FALSE, sep="\t")
+write.table(as.data.frame(bed.anno), "annotated.bed", quote=FALSE, sep="\t", row.names=FALSE)
+```
+
+最後に `ggplot2` を使用してグラフを作成します。
+
+```R
+library(ggplot2)
+
+fortify.table <- function(model, ...) {
+  data <- reshape2::melt(model)
+  return(data)
+}
+
+reshape.bed <- reshape2::melt(bed.anno.table)
+reshape.bed
+pdf("annotation.pdf")
+g <- ggplot(data=reshape.bed, aes(x=Var1, y=value, fill=Var1))
+g <- g + guides(fill=FALSE)
+g <- g + geom_bar(width=0.8, stat='identity')
+g <- g + xlab('Region')
+g <- g + ylab('Peak count')
+g <- g + ggtitle('Peak Binding Regions')
+g <- g + theme(axis.text.x = element_text(angle=60, hjust=1))
+plot(g)
+dev.off()
+```
