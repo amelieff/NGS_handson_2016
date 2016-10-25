@@ -177,10 +177,10 @@ cufflinks -o SRR2048229 --min-frags-per-transfrag 2 2_mapping/10K_SRR2048229.sor
 
 ---
 
-transcripts.gtfの確認
+genes.fpkm_trackingの確認
 ```
 ls SRR2048224
-less SRR2048224/transcripts.gtf
+less SRR2048224/genes.fpkm_tracking
 ```
 
 ---
