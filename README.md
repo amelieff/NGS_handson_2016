@@ -34,6 +34,6 @@
 ## ChIP-seq
 第2部 | NGS解析(初～中級) | ChIP-seq(2016.07.28)
 
-[講義資料(PDF)](http://biosciencedbc.jp/gadget/human/20160728_amelieff_20160803.pdf)
+[講義資料(PDF)](https://biosciencedbc.jp/gadget/human/20160728_amelieff_20170412.pdf)
 
 [コピペ用コマンド](./ChIPseq.md)
