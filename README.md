@@ -2,6 +2,9 @@
 このリポジトリは、NGSハンズオン講習会2016年における、アメリエフが担当する講義パートの資料置き場です。  
 コピペ用コマンドを上手く利用して、受講してください。
 
+### 修正履歴
+2017.4.12 ChIP-seq資料で、seqtkの準備手順の誤りを修正しました
+
 ## NGS基礎
 第2部 | NGS解析(初～中級) | NGS解析基礎(2016.07.25)
 
@@ -31,6 +34,6 @@
 ## ChIP-seq
 第2部 | NGS解析(初～中級) | ChIP-seq(2016.07.28)
 
-[講義資料(PDF)](http://biosciencedbc.jp/gadget/human/20160728_amelieff_20160803.pdf)
+[講義資料(PDF)](https://biosciencedbc.jp/gadget/human/20160728_amelieff_20170412.pdf)
 
 [コピペ用コマンド](./ChIPseq.md)
